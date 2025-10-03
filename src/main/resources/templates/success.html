@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org">
+
+<head th:replace="~{base::head}">
+
+</head>
+
+<body>
+	<!-- Navbar Start -->
+	<div th:replace="~{base::navbar(success='active')}"></div>
+	<!-- Navbar End -->
+
+
+	<!-- Page Header Start -->
+	<div th:replace="~{base::header(text='Success')}"></div>
+	<!-- Page Header End -->
+
+
+	<!-- Success Start -->
+	<div class="container-fluid py-5"></div>
+	<div class="container">
+		<h3>Booked Success</h3>
+		<div class="card shadow p-4 text-center">
+			<p class="form-control-plaintext"
+				th:text="|${booked.name}  -  ${booked.phoneNumber}  -  ${booked.email}  -  ${booked.date}  at  ${booked.time}  for  ${booked.person} seat(s)|">
+			</p>
+
+		</div>
+	</div>
+	</div>
+	<!-- Success End -->
+
+
+	<!-- Footer Start -->
+	<div th:replace="~{base::footer}"></div>
+	<!-- Footer End -->
+
+
+	<!-- Back to Top -->
+	<div th:replace="~{base::script}"></div>
+</body>
+
+</html>
