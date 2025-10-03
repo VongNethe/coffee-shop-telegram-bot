@@ -20,3 +20,5 @@ EXPOSE 8080
 
 # Start the app
 ENTRYPOINT ["java","-jar","app.jar"]
+
+RUN ./gradlew clean bootJar -x test
