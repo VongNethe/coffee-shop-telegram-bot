@@ -1,24 +1,16 @@
-# Stage 1: Build your JAR
+# Stage 1: Build the JAR
 FROM eclipse-temurin:24-jdk AS build
 WORKDIR /app
-
-# Copy all project files
 COPY . .
+
+# Make gradlew executable
+RUN chmod +x ./gradlew
 
 # Build the Spring Boot JAR
 RUN ./gradlew clean bootJar -x test
 
-# Stage 2: Run your app
+# Stage 2: Run the JAR
 FROM eclipse-temurin:24-jdk
 WORKDIR /app
-
-# Copy the built JAR from the build stage
 COPY --from=build /app/build/libs/*.jar app.jar
-
-# Expose the default Spring Boot port (will use Render's PORT variable)
-EXPOSE 8080
-
-# Start the app
 ENTRYPOINT ["java","-jar","app.jar"]
-
-RUN ./gradlew clean bootJar -x test
