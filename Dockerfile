@@ -1,29 +1,17 @@
-# ==========================
-# Stage 1: Build the Spring Boot JAR
-# ==========================
-FROM eclipse-temurin:24-jdk AS build
+# Use official OpenJDK image
+FROM eclipse-temurin:21-jdk-alpine
+
+# Set working directory
 WORKDIR /app
 
-# Copy all project files
+# Copy everything into the container
 COPY . .
 
-# Make Gradle wrapper executable
+# Give Gradle wrapper execute permission (important on Linux)
 RUN chmod +x ./gradlew
 
-# Build the Spring Boot JAR, skip tests
-RUN ./gradlew clean bootJar -x test
+# Build the project
+RUN ./gradlew build -x test --no-daemon
 
-# ==========================
-# Stage 2: Run the Spring Boot JAR
-# ==========================
-FROM eclipse-temurin:24-jdk
-WORKDIR /app
-
-# Copy the JAR from the build stage
-COPY --from=build /app/build/libs/*.jar app.jar
-
-# Expose port (Render/Railway will override)
-EXPOSE 8080
-
-# Run the app
-ENTRYPOINT ["java","-jar","app.jar"]
+# Run the JAR
+CMD ["java", "-jar", "build/libs/coffee-shop-telegram-bot-0.0.1-SNAPSHOT.jar"]
